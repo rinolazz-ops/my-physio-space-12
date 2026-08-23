@@ -21,21 +21,19 @@ export const submitContact = createServerFn({ method: "POST" })
       },
     });
 
-    const { data: inserted, error } = await supabase
+    const { error } = await supabase
       .from("contact_messages")
       .insert({
         name: data.name,
         email: data.email,
         phone: data.phone ? data.phone : null,
         message: data.message,
-      })
-      .select("id")
-      .single();
+      });
 
     if (error) {
       console.error("contact insert failed", error.message);
       throw new Error("Invio non riuscito");
     }
 
-    return { ok: true as const, id: inserted.id };
+    return { ok: true as const };
   });
