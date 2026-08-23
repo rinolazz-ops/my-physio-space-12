@@ -34,9 +34,10 @@ export const submitContact = createServerFn({ method: "POST" })
       });
 
     if (error) {
-      console.error("contact insert failed", error.message);
+      console.error("contact insert failed", JSON.stringify(error), key.slice(0, 6));
       throw new Error("Invio non riuscito");
     }
+
 
     return { ok: true as const };
   });
