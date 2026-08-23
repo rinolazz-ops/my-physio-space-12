@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/hero.jpg";
 import studioImg from "@/assets/studio.jpg";
 import manualImg from "@/assets/manual.jpg";
+import { ContactForm } from "@/components/ContactForm";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -216,12 +218,15 @@ function Index() {
               Scrivimi o chiamami per fissare la prima valutazione. Rispondo personalmente entro
               24 ore.
             </p>
+            <div className="mx-auto mt-10 max-w-2xl">
+              <ContactForm />
+            </div>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <a
-                href="mailto:info@valeriaferraz.it"
-                className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+                href="mailto:valferraz36@gmail.com"
+                className="rounded-full border border-primary/30 px-6 py-3 text-sm font-medium transition-colors hover:bg-background"
               >
-                info@valeriaferraz.it
+                valferraz36@gmail.com
               </a>
               <a
                 href="tel:+390490000000"
@@ -230,6 +235,7 @@ function Index() {
                 +39 049 000 0000
               </a>
             </div>
+
             <p className="mt-8 text-xs tracking-[0.2em] uppercase text-muted-foreground">
               Studio in centro · Padova · Lun–Ven 8:00–19:00
             </p>
