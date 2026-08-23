@@ -3,11 +3,14 @@ import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 import { contactSchema } from "./contact-schema";
 
+const unquote = (value: string) => value.replace(/^["']|["']$/g, "");
+
 export const submitContact = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => contactSchema.parse(data))
   .handler(async ({ data }) => {
-    const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
-    const supabase = createClient<Database>(process.env["SUPABASE_URL"]!, key, {
+    const key = unquote(process.env["SUPABASE_PUBLISHABLE_KEY"]!);
+    const supabase = createClient<Database>(unquote(process.env["SUPABASE_URL"]!), key, {
+
       auth: { persistSession: false },
       global: {
         fetch: (input, init) => {
