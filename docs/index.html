@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Preview + Copia: Studio Fisioterapia</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,-apple-system,Helvetica,Arial;margin:0;color:#222;background:#f6f7fb}
+    header{background:#0066a1;color:white;padding:20px;text-align:center;border-bottom:4px solid rgba(0,0,0,0.06)}
+    main{max-width:900px;margin:20px auto;padding:16px;}
+    footer{color:#666;text-align:center;padding:20px 0;}
+    .card{background:#fff;border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,0.06);}
+    .tools{max-width:900px;margin:8px auto 20px;display:flex;gap:8px;align-items:center;justify-content:flex-end;padding:0 16px;}
+    button{background:#0066a1;color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;}
+    button.secondary{background:#444;color:white;}
+    textarea{width:calc(100% - 32px);height:260px;margin:12px 16px;padding:12px;border-radius:8px;border:1px solid #ddd;font-family:monospace;white-space:pre;overflow:auto;resize:vertical;}
+    .wrap{background:#fff;border-radius:10px;margin:0 16px;padding:12px;box-shadow:0 2px 6px rgba(0,0,0,0.04);}
+    .note{font-size:13px;color:#555;margin-right:auto}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Studio di Fisioterapia — Anteprima</h1>
+    <p style="margin:6px 0 0">Usa i pulsanti per copiare o scaricare l'HTML da incollare su GitHub</p>
+  </header>
+
+  <div class="tools">
+    <div class="note">Preview → &nbsp; Copia o scarica il file per aggiungerlo al repo</div>
+    <button id="copyBtn">Copia codice</button>
+    <button id="downloadBtn" class="secondary">Scarica file</button>
+  </div>
+
+  <main>
+    <div class="wrap" id="preview"></div>
+
+    <h3 style="margin-left:16px">HTML sorgente (puoi modificarlo prima di copiare)</h3>
+    <textarea id="source" spellcheck="false" aria-label="HTML sorgente"></textarea>
+  </main>
+
+  <footer>Realizzato con ❤️ · Bozza rapida</footer>
+
+  <script>
+    // Qui sotto definisci il sorgente HTML che vuoi copiare / scaricare.
+    const htmlSource = `<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Studio Fisioterapia</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,-apple-system,Helvetica,Arial;margin:0;color:#222;}
+    header{background:#0066a1;color:white;padding:32px;text-align:center;}
+    main{max-width:900px;margin:24px auto;padding:0 16px;}
+    footer{color:#666;text-align:center;padding:24px 0;}
+    .card{background:#fff;border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,0.06);}  
+    nav{display:flex;justify-content:flex-end;padding:12px 24px;gap:8px;}
+    .menu-btn{background:#fff;border:1px solid #e0e0e0;padding:8px 12px;border-radius:8px;cursor:pointer;}
+    .turni-list{margin-top:8px;}
+    .turni-list a{display:block;color:#0066a1;margin:6px 0;text-decoration:none;}
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <!-- Pulsante menu a destra con sezione Turni -->
+      <div style="position:relative;">
+        <button class="menu-btn" id="menuBtn">Menu ▾</button>
+        <div id="menu" style="display:none;position:absolute;right:0;top:42px;background:white;border:1px solid #ddd;padding:12px;border-radius:8px;min-width:220px;box-shadow:0 6px 18px rgba(0,0,0,0.08);">
+          <strong>Turni</strong>
+          <div class="turni-list" id="turniList">
+            <!-- Link ai PDF verranno inseriti qui -->
+            <a href="/turni/✅ 2026-06-13-SABATO-TURNI-ES_02.pdf" target="_blank" download>✅ 2026-06-13-SABATO-TURNI-ES_02.pdf</a>
+            <a href="/turni/✅️ 2026-06-07-FESTIVO-TURNI-ES_02.pdf" target="_blank" download>✅️ 2026-06-07-FESTIVO-TURNI-ES_02.pdf</a>
+            <a href="/turni/✅️ 2026-07-06-LUN-VEN-TURNI-ES.pdf" target="_blank" download>✅️ 2026-07-06-LUN-VEN-TURNI-ES.pdf</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <h1 style="margin:8px 24px 18px">Studio di Fisioterapia — [Nome]</h1>
+    <p style="margin:0 24px 18px">Riabilitazione, terapia manuale e trattamenti personalizzati</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Servizi</h2>
+      <ul>
+        <li>Rieducazione motoria</li>
+        <li>Terapia manuale</li>
+        <li>Riabilitazione post-operatoria</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Contatti</h2>
+      <p>Email: info@example.com</p>
+      <p>Tel: 333 1234567</p>
+      <p>Indirizzo: Via Esempio 10, Città</p>
+    </section>
+  </main>
+
+  <footer>powered by Rino · <small>Bozza rapida</small></footer>
+
+  <script>
+    // Interazione del menu turni
+    document.addEventListener('DOMContentLoaded', function(){
+      var btn = document.getElementById('menuBtn');
+      var menu = document.getElementById('menu');
+      btn.addEventListener('click', function(e){
+        menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+      });
+      document.addEventListener('click', function(ev){
+        if (!btn.contains(ev.target) && !menu.contains(ev.target)) menu.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>`;
+
+    // Inserisci l'anteprima e la textarea con il source
+    document.getElementById('preview').innerHTML = htmlSource;
+    document.getElementById('source').value = htmlSource;
+
+    // Copia negli appunti
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(document.getElementById('source').value);
+        document.getElementById('copyBtn').textContent = 'Copiato ✅';
+        setTimeout(()=>document.getElementById('copyBtn').textContent = 'Copia codice',1500);
+      } catch (err) {
+        alert('Copia non riuscita. Se usi mobile, prova a tenere premuto sul testo e selezionare copia.');
+      }
+    });
+
+    // Scarica il file come docs_index.html
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      const blob = new Blob([document.getElementById('source').value], {type: 'text/html;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'docs_index.html';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
