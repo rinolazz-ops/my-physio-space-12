@@ -1,0 +1,74 @@
+name: Build and deploy Lovable site to GitHub Pages
+on:
+  push:
+    branches: [ "main", "setup-pages" ]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Debug info
+        run: |
+          echo "Actor: $GITHUB_ACTOR"
+          node --version || echo "node not found"
+          npm --version || echo "npm not found"
+          echo "Listing repo root:"
+          ls -la
+
+      - name: If docs exists, publish it directly
+        id: check_docs
+        run: |
+          if [ -d "docs" ] && [ "$(ls -A docs)" ]; then
+            echo "found_docs=true" >> $GITHUB_OUTPUT
+            echo "publish_dir=docs" >> $GITHUB_OUTPUT
+          else
+            echo "found_docs=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install & Build (only if no docs)
+        if: steps.check_docs.outputs.found_docs == 'false'
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+          # try npm build if script exists
+          if npm run | grep -q " build"; then
+            npm run build
+          else
+            echo "No npm build script found; skipping build"
+          fi
+
+      - name: Detect publish directory
+        id: detect
+        run: |
+          set -e
+          # if check_docs already set publish_dir, reuse it
+          if [ "${{ steps.check_docs.outputs.found_docs }}" = "true" ]; then
+            echo "Using docs as publish_dir"
+            echo "publish_dir=docs" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          # otherwise look for common build folders
+          for d in dist build public out docs; do
+            if [ -d "$d" ] && [ "$(ls -A $d)" ]; then
+              echo "publish_dir=$d" >> $GITHUB_OUTPUT
+              echo "Detected publish dir: $d"
+              exit 0
+            fi
+          done
+          echo "No output directory detected (tried: dist build public out docs)"; exit 1
+
+      - name: Show publish dir contents
+        run: |
+          echo "Publish dir -> ${{ steps.detect.outputs.publish_dir }}"
+          ls -la "${{ steps.detect.outputs.publish_dir }}" || true
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ steps.detect.outputs.publish_dir }}
