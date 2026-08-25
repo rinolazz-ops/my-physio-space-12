@@ -1,0 +1,4 @@
+[run]
+install = "echo no dependencies"
+dev = "./.lovable-dev.sh"
+build = "echo static site"
