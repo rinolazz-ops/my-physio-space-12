@@ -1,4 +1,4 @@
 [run]
 install = "echo no dependencies"
-dev = "python3 -m http.server 8080 --bind 0.0.0.0"
+dev = "./.lovable-dev.sh"
 build = "echo static site"
